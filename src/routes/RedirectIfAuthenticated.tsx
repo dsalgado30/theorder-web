@@ -1,18 +1,19 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { routes } from './AppRoutes';
+import { Role } from '../models/role';
+import { routes } from './Routes';
 
 interface RedirectIfAuthenticatedProps {
   isAuthenticated: boolean;
-  role: string;
+  role?: string;
   children: React.ReactNode;
 }
 
 const RedirectIfAuthenticated = ({ isAuthenticated, role, children }: RedirectIfAuthenticatedProps) => {
   if (isAuthenticated) {
-    if (role === 'admin') {
+    if (role === Role.ADMIN || role === Role.COOK) {
       return <Navigate to={routes.admin} />;
-    } else if (role === 'client') {
+    } else if (role === Role.CLIENT) {
       return <Navigate to={routes.clientCatalog} />;
     }
   }

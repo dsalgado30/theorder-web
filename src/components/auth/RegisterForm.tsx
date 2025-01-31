@@ -1,7 +1,7 @@
 import { Button, Card, CardBody, Form, Input } from "@heroui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { routes } from "../../routes/AppRoutes";
+import { routes } from "../../routes/Routes";
 
 const RegisterForm = () => {
   const [action, setAction] = React.useState("");
@@ -60,7 +60,7 @@ const RegisterForm = () => {
             placeholder="Confirme su contraseña"
             type="password"
           />
-          <Button color="warning" type="submit" className="w-1/2 mt-2 mx-auto">
+          <Button color="primary" type="submit" className="w-1/2 mt-2 mx-auto">
             Registrarse
           </Button>
           <Link to={routes.root} className="text-center w-1/2 mx-auto">

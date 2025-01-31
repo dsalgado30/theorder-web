@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App.tsx";
 import { HeroUIProvider } from "@heroui/react";
 import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./context/auth-context.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HeroUIProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HeroUIProvider>
+    <AuthProvider>
+      <HeroUIProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HeroUIProvider>
+    </AuthProvider>
   </StrictMode>
 );

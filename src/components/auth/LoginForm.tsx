@@ -1,10 +1,14 @@
 import { Button, Card, CardBody, Form, Input } from "@heroui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { routes } from "../../routes/AppRoutes";
+import { useAuth } from "../../hooks/use-auth";
+import { AuthLogin } from "../../models/auth";
+import { routes } from "../../routes/Routes";
 
 const LoginForm = () => {
   const [action, setAction] = React.useState("");
+  const { onLogin } = useAuth();
+
   return (
     <Card fullWidth={true} className="w-full max-w-md">
       <CardBody>
@@ -16,6 +20,7 @@ const LoginForm = () => {
             e.preventDefault();
             let data = Object.fromEntries(new FormData(e.currentTarget));
             setAction(`submit ${JSON.stringify(data)}`);
+            onLogin(new AuthLogin("",""))
           }}
         >
           <h1 className="text-center w-full">Iniciar Sesión</h1>
@@ -35,7 +40,7 @@ const LoginForm = () => {
             placeholder="Ingrese su contraseña"
             type="password"
           />
-          <Button color="warning" type="submit" className="w-1/2 mt-2 mx-auto">
+          <Button color="primary" type="submit" className="w-1/2 mt-2 mx-auto">
             Ingresar
           </Button>
           <Link to={routes.register} className="text-center w-1/2 mx-auto">

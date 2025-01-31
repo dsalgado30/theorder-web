@@ -9,35 +9,29 @@ import ProtectedRoute from "./ProtectedRoute";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminPage from "../pages/admin/AdminPage";
 import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
-
-export const routes = {
-  home: "/",
-  login: "/login",
-  register: "/register",
-  clientCatalog: "/client/catalog",
-  admin: "/admin",
-  root: "..",
-};
+import { useAuth } from "../hooks/use-auth";
+import { routes } from "./Routes";
+import { Role } from "../models/role";
 
 const AppRoutes = () => {
-  const role: string = "client"; // Este valor debería venir de tu estado de autenticación
-  const isAuthenticated = true; // Este valor debería venir de tu estado de autenticación
+
+  const {isAuthenticated, user} = useAuth()
 
   return (
     <Routes>
       <Route path={routes.home} element={
-        <RedirectIfAuthenticated isAuthenticated={isAuthenticated} role={role}>
+        <RedirectIfAuthenticated isAuthenticated={isAuthenticated} role={user?.role}>
           <Navigate to={routes.login} />
         </RedirectIfAuthenticated>
       } />
       <Route element={<AuthLayout />}>
         <Route path={routes.login} element={
-          <RedirectIfAuthenticated isAuthenticated={isAuthenticated} role={role}>
+          <RedirectIfAuthenticated isAuthenticated={isAuthenticated} role={user?.role}>
             <LoginPage />
           </RedirectIfAuthenticated>
         } />
         <Route path={routes.register} element={
-          <RedirectIfAuthenticated isAuthenticated={isAuthenticated} role={role}>
+          <RedirectIfAuthenticated isAuthenticated={isAuthenticated} role={user?.role}>
             <RegisterPage />
           </RedirectIfAuthenticated>
         } />
@@ -48,8 +42,8 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute
               component={ClientCatalogPage}
-              roles={['client']}
-              userRole={role}
+              roles={[Role.CLIENT]}
+              userRole={user?.role}
               isAuthenticated={isAuthenticated}
             />
           }
@@ -61,8 +55,8 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute
               component={AdminPage}
-              roles={['admin']}
-              userRole={role}
+              roles={[Role.ADMIN, Role.COOK]}
+              userRole={user?.role}
               isAuthenticated={isAuthenticated}
             />
           }

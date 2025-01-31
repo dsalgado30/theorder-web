@@ -20,7 +20,9 @@ export default {
       themes: {
         light: {
           layout: {}, // light theme layout tokens
-          colors: {}, // light theme colors
+          colors: {
+            primary: "#DC7F13"
+          }, // light theme colors
         },
         dark: {
           layout: {}, // dark theme layout tokens
