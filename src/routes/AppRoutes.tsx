@@ -12,6 +12,8 @@ import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
 import { useAuth } from "../hooks/use-auth";
 import { routes } from "./Routes";
 import { Role } from "../models/role";
+import RestaurantPage from "../pages/admin/RestaurantPage";
+import ProductsPage from "../pages/admin/ProductsPage";
 
 const AppRoutes = () => {
 
@@ -56,6 +58,28 @@ const AppRoutes = () => {
             <ProtectedRoute
               component={AdminPage}
               roles={[Role.ADMIN, Role.COOK]}
+              userRole={user?.role}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+        <Route
+          path={routes.restaurant}
+          element={
+            <ProtectedRoute
+              component={RestaurantPage}
+              roles={[Role.ADMIN]}
+              userRole={user?.role}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+        <Route
+          path={routes.products}
+          element={
+            <ProtectedRoute
+              component={ProductsPage}
+              roles={[Role.ADMIN]}
               userRole={user?.role}
               isAuthenticated={isAuthenticated}
             />

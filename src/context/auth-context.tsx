@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: any) => {
   }, [isAuthenticated, user]);
 
   const onLogin = (request: AuthLogin) => {
-    const newUser = new User("Daniela Salgado", "daniela@example.com", Role.COOK);
+    const newUser = new User("Daniela Salgado", "daniela@example.com", Role.ADMIN);
     setUser(newUser);
     setIsAuthenticated(true);
   };

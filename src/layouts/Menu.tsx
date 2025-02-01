@@ -14,13 +14,13 @@ export const adminMenu: MenuItem[] = [
   {
     code: "MY_RESTAURANT",
     title: "Mi Restaurante",
-    path: routes.home,
+    path: routes.restaurant,
     icon: <BuildingStorefrontIcon className="h-5 w-5 mr-2" />
   },
   {
     code: "PRODUCTS",
     title: "Productos",
-    path: routes.home,
+    path: routes.products,
     icon: <BookmarkIcon className="h-5 w-5 mr-2" />
   },
   {
