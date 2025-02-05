@@ -1,20 +1,18 @@
 import { useRef, useState } from "react";
-import ProductList from "../../components/admin/product/ProductList";
 import { Button } from "@heroui/react";
+import UsersList from "../../components/admin/users/UsersList";
 import Dialog from "../../components/atomic/molecules/Modal";
-import ProductForm from "../../components/admin/product/ProducForm";
+import UsersForm from "../../components/admin/users/UsersForm";
 import { Action } from "../../models/action";
 
-const ProductsPage = () => {
+const UsersPage = () => {
   const [action, setAction] = useState<Action>(Action.ADD);
   const dialogRef = useRef<{ onOpen: () => void; onClose: () => void }>(null);
+
   return (
     <>
       <Button
-        onPress={() => {
-          setAction(Action.ADD)
-          dialogRef?.current?.onOpen()
-        }}
+        onPress={() => dialogRef?.current?.onOpen()}
         color="primary"
         type="submit"
         className="w-40 mb-2"
@@ -23,22 +21,21 @@ const ProductsPage = () => {
       </Button>
       <Dialog
         ref={dialogRef}
-        title={action== Action.ADD ? "Agregar Producto":'Editar Producto'}
+        title={action== Action.ADD ? "Agregar Usuario":'Editar Usuario'}
         content={
-          <ProductForm
+          <UsersForm
             actionType={action}
             onSave={() => {
               dialogRef?.current?.onClose();
             }}
-          ></ProductForm>
+          ></UsersForm>
         }
       />
-      <ProductList onEdit={()=> {
+      <UsersList onEdit={()=> {
         setAction(Action.EDIT)
         dialogRef?.current?.onOpen()
       }} />
     </>
   );
 };
-
-export default ProductsPage;
+export default UsersPage;

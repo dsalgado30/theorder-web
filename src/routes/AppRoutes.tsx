@@ -14,6 +14,9 @@ import { routes } from "./Routes";
 import { Role } from "../models/role";
 import RestaurantPage from "../pages/admin/RestaurantPage";
 import ProductsPage from "../pages/admin/ProductsPage";
+import UsersPage from "../pages/admin/UsersPage";
+import OrdersPage from "../pages/admin/OrdersPage";
+import HistoryPage from "../pages/admin/HistoryPage";
 
 const AppRoutes = () => {
 
@@ -79,6 +82,39 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute
               component={ProductsPage}
+              roles={[Role.ADMIN]}
+              userRole={user?.role}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+        <Route
+          path={routes.users}
+          element={
+            <ProtectedRoute
+              component={UsersPage}
+              roles={[Role.ADMIN]}
+              userRole={user?.role}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+        <Route
+          path={routes.orders}
+          element={
+            <ProtectedRoute
+              component={OrdersPage}
+              roles={[Role.ADMIN]}
+              userRole={user?.role}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+        <Route
+          path={routes.history}
+          element={
+            <ProtectedRoute
+              component={HistoryPage}
               roles={[Role.ADMIN]}
               userRole={user?.role}
               isAuthenticated={isAuthenticated}

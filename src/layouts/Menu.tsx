@@ -26,19 +26,19 @@ export const adminMenu: MenuItem[] = [
   {
     code: "USERS",
     title: "Usuarios",
-    path: routes.home,
+    path: routes.users,
     icon: <UserGroupIcon className="h-5 w-5 mr-2" />
   },
   {
     code: "ORDERS",
     title: "Pedidos",
-    path: routes.home,
+    path: routes.orders,
     icon: <ShoppingCartIcon className="h-5 w-5 mr-2" />
   },
   {
     code: "HISTORY",
     title: "Historial",
-    path: routes.home,
+    path: routes.history,
     icon: <TableCellsIcon className="h-5 w-5 mr-2" />
   }
 ];

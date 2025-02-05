@@ -1,4 +1,4 @@
-import RestaurantForm from "../../components/admin/Restaurant";
+import RestaurantForm from "../../components/admin/RestaurantForm";
 
 const RestaurantPage = () => {
   return (

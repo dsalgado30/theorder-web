@@ -1,9 +1,7 @@
 import { Button, Card, CardBody, Form, Input, Image } from "@heroui/react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 import { AuthLogin } from "../../models/auth";
-import { routes } from "../../routes/Routes";
 
 const RestaurantForm = () => {
   const [action, setAction] = React.useState("");

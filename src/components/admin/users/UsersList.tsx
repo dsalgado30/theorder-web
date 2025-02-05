@@ -6,9 +6,8 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Image,
   Tooltip,
-  Button,
+  
 } from "@heroui/react";
 import { EditIcon } from "../../atomic/atoms/icons/EditIcon";
 import { DeleteIcon } from "../../atomic/atoms/icons/DeleteIcon";
@@ -16,46 +15,40 @@ import { DeleteIcon } from "../../atomic/atoms/icons/DeleteIcon";
 export const columns = [
   { name: "Codigo", uid: "code" },
   { name: "Nombre", uid: "name" },
-  { name: "Precio", uid: "price" },
-  { name: "Foto", uid: "photo" },
+  { name: "Correo", uid: "email" },
+  { name: "Rol", uid: "role" },
   { name: "Opciones", uid: "actions" },
 ];
 
 export interface Product {
   code: number;
   name: string;
-  price: number;
-  photo: string;
+  email: string;
+  role: string;
 }
 
 export const products: Product[] = [
   {
     code: 1,
-    name: "Pizza",
-    price: 8000,
-    photo: "https://imag.bonviveur.com/hamburguesa-clasica.webp",
+    name: "Pedrito",
+    email: "ejemplo@example.com",
+    role:"Aprendiz",
   },
   {
     code: 2,
-    name: "Hamburguesa",
-    price: 8000,
-    photo: "https://imag.bonviveur.com/hamburguesa-clasica.webp",
+    name: "Daniela",
+    email: "daniela@example.com",
+    role: "Aprendiz",
   },
 ];
 
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-  }).format(price);
-};
 
-interface ProductListProps {
+interface UsersListProps {
   onEdit?: () => void;
   onDelete?: () => void;
 }
 
-export default function ProductList({ onEdit, onDelete }: ProductListProps) {
+export default function UserList({onEdit, onDelete}:UsersListProps) {
   const renderCell = React.useCallback(
     (product: Product, columnKey: keyof Product | "actions") => {
       const cellValue = product[columnKey as keyof Product];
@@ -65,16 +58,11 @@ export default function ProductList({ onEdit, onDelete }: ProductListProps) {
           return <p className="font-bold">{cellValue}</p>;
         case "name":
           return <p className="capitalize">{cellValue}</p>;
-        case "price":
-          return (
-            <p className="font-medium text-sm capitalize">
-              {formatPrice(cellValue as number)}
-            </p>
-          );
-        case "photo":
-          return (
-            <Image alt="hero Image" src={cellValue as string} width={50} />
-          );
+        case "email":
+          return <p className="capitalize">{cellValue}</p>;
+        case "role":
+          return <p className="capitalize">{cellValue}</p>;
+        
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
@@ -99,6 +87,8 @@ export default function ProductList({ onEdit, onDelete }: ProductListProps) {
 
   return (
     <>
+
+
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (

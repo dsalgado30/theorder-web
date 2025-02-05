@@ -6,5 +6,8 @@ export const routes = {
     admin: "/admin",
     restaurant: "/admin/restaurant",
     products: "/admin/products",
+    users:"/admin/users",
+    orders:"/admin/orders",
+    history:"/admin/history",
     root: "..",
   };
