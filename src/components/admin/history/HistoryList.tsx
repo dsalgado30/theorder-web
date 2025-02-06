@@ -35,7 +35,7 @@ export const products: Product[] = [
     date: "24/01/2025 9:35 PM",
     package: "Para llevar",
     user: "Daniela",
-    state: "En Espera",
+    state: "Despachado",
     domicile: "Si",
   },
   {
@@ -59,7 +59,7 @@ export const products: Product[] = [
     date: "23/01/2025 8:30 PM",
     package: "Para llevar",
     user: "Ttaa",
-    state: "Despachado",
+    state: "En Espera",
     domicile: "No",
   },
 ];
@@ -110,10 +110,7 @@ export default function HistoryList() {
 
   return (
     <>
-      <Button color="primary" type="submit" className="w-40 mb-2">
-        Agregar Nuevo
-      </Button>
-
+    
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (

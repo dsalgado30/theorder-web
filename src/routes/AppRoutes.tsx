@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import NotFound from "../components/atomic/atoms/NotFound";
+import NotFound from "../components/atomic/templates/NotFound";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import AuthLayout from "../layouts/AuthLayout";
@@ -17,6 +17,7 @@ import ProductsPage from "../pages/admin/ProductsPage";
 import UsersPage from "../pages/admin/UsersPage";
 import OrdersPage from "../pages/admin/OrdersPage";
 import HistoryPage from "../pages/admin/HistoryPage";
+import OrderDetailPage from "../pages/admin/OrderDetailPage";
 
 const AppRoutes = () => {
 
@@ -115,6 +116,17 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute
               component={HistoryPage}
+              roles={[Role.ADMIN]}
+              userRole={user?.role}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+        <Route
+          path={routes.orderDetail}
+          element={
+            <ProtectedRoute
+              component={OrderDetailPage}
               roles={[Role.ADMIN]}
               userRole={user?.role}
               isAuthenticated={isAuthenticated}

@@ -6,114 +6,116 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Button,
-  Chip,
+  Button
 } from "@heroui/react";
+import OrderStatus from "../../atomic/organisms/OrderStatus";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../../routes/Routes";
+import { Order, OrderState } from "../../../models/order";
 
 export const columns = [
-  { name: "Id", uid: "code" },
+  { name: "Id", uid: "id" },
   { name: "Fecha y Hora", uid: "date" },
-  { name: "Paquete", uid: "package" },
+  { name: "Paquete", uid: "packageType" },
   { name: "Usuario", uid: "user" },
-  { name: "Estado", uid: "state" },
-  { name: "Domicilio", uid: "domicile" },
+  { name: "Estado", uid: "statusCode" },
+  { name: "Domicilio", uid: "homeDelivery" },
   { name: "Opciones", uid: "actions" },
 ];
 
-export interface Product {
-  code: number;
-  date: string;
-  package: string;
-  user: string;
-  state: string;
-  domicile: string;
-}
-
-export const products: Product[] = [
+export const orders: Order[] = [
   {
-    code: 1,
-    date: "24/01/2025 9:35 PM",
-    package: "Para llevar",
+    id: "001",
+    date: "2025-02-05 12:00:00",
+    packageType: "Para llevar",
     user: "Daniela",
-    state: "En Espera",
-    domicile: "Si",
+    statusCode: OrderState.EnEspera,
+    statusName: "Despachado",
+    homeDelivery: true,
+    total: 20000,
+    detail: []
   },
   {
-    code: 2,
-    date: "23/01/2025 8:30 PM",
-    package: "Para consumo en el sitio",
-    user: "Manuel",
-    state: "Listo",
-    domicile: "No",
+    id: "002",
+    date: "2025-02-05 12:00:00",
+    packageType: "Para llevar",
+    user: "Daniela",
+    statusCode: OrderState.EnPreparacion,
+    statusName: "En preparacion",
+    homeDelivery: true,
+    total: 34000,
+    detail: []
+
   },
   {
-    code: 3,
-    date: "23/01/2025 8:30 PM",
-    package: "Para consumo en el sitio",
-    user: "Santiago",
-    state: "Despachado",
-    domicile: "No",
+    id: "003",
+    date: "2025-02-05 12:00:00",
+    packageType: "Para llevar",
+    user: "Daniela",
+    statusCode: OrderState.Listo,
+    statusName: "Listo",
+    homeDelivery: true,
+    total: 10000,
+    detail: []
+
   },
   {
-    code: 4,
-    date: "23/01/2025 8:30 PM",
-    package: "Para consumo en el sitio",
-    user: "Pedro",
-    state: "En Preparacion",
-    domicile: "No",
+    id: "004",
+    date: "2025-02-05 12:00:00",
+    packageType: "Para llevar",
+    user: "Daniela",
+    statusCode: OrderState.Despachado,
+    statusName: "Despachado",
+    homeDelivery: true,
+    total: 40000,
+    detail: []
+
   },
 ];
-const statusColorMap = {
-  "En Espera": "warning",
-  "En Preparacion": "danger",
-  Listo: "success",
-  Despachado: "default",
-};
 
 export default function OrdersList() {
-  const renderCell = React.useCallback(
-    (product: Product, columnKey: keyof Product | "actions") => {
-      const cellValue = product[columnKey as keyof Product];
+  const navigate = useNavigate();
 
+  const goToOrderDetail = (orderId: string) => {
+    navigate(routes.orderDetail.replace(":orderId", orderId));
+  };
+
+
+  const renderCell = React.useCallback(
+    (order: Order, columnKey: keyof Order | "actions") => {
+      const cellValue = order[columnKey as keyof Order];
       switch (columnKey) {
-        case "code":
+        case "id":
           return (
             <p className="font-bold">
               #{cellValue.toString().padStart(3, "0")}
             </p>
           );
         case "date":
-          return <p className="capitalize">{cellValue}</p>;
-        case "package":
+          return <p className="capitalize">{order.date}</p>;
+        case "packageType":
           return (
             <p className="capitalize">
-              <strong>{cellValue}</strong>
+              <strong>{cellValue.toString()}</strong>
             </p>
           );
         case "user":
-          return <p className="capitalize">{cellValue}</p>;
-        case "state":
+          return <p className="capitalize">{order.user}</p>;
+        case "statusCode":
           return (
-            <Chip
-              className="capitalize"
-              color={statusColorMap[product.state]}
-              size="sm"
-              variant="flat"
-            >
-              {cellValue}
-            </Chip>
+            <OrderStatus state={order.statusCode} label={order.statusName} />
           );
-        case "domicile":
-          return <p className="capitalize">{cellValue}</p>;
+        case "homeDelivery":
+          return <p className="capitalize">{cellValue ? 'Si':'No'}</p>;
 
         case "actions":
           return (
-            <Button color="primary" size="sm">
+            <Button color="primary" size="sm" onPress={()=> goToOrderDetail(order.id)}>
               Ver detalle
             </Button>
           );
         default:
-          return cellValue;
+          return (<h1></h1>);
       }
     },
     []
@@ -132,14 +134,14 @@ export default function OrdersList() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={products}>
+        <TableBody items={orders}>
           {(item) => (
-            <TableRow key={item.package}>
+            <TableRow key={item.packageType}>
               {(columnKey) => (
                 <TableCell>
                   {renderCell(
                     item,
-                    columnKey.toString() as keyof Product | "actions"
+                    columnKey.toString() as keyof Order | "actions"
                   )}
                 </TableCell>
               )}

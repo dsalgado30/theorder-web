@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Table,
   TableHeader,
@@ -7,11 +7,13 @@ import {
   TableRow,
   TableCell,
   Image,
-  Tooltip,
-  Button,
+  Tooltip
 } from "@heroui/react";
 import { EditIcon } from "../../atomic/atoms/icons/EditIcon";
 import { DeleteIcon } from "../../atomic/atoms/icons/DeleteIcon";
+import Alert from "../../atomic/molecules/Alert";
+import { Product } from "../../../models/product";
+import { formatPrice } from "../../../utils/price-format.utils";
 
 export const columns = [
   { name: "Codigo", uid: "code" },
@@ -21,34 +23,25 @@ export const columns = [
   { name: "Opciones", uid: "actions" },
 ];
 
-export interface Product {
-  code: number;
-  name: string;
-  price: number;
-  photo: string;
-}
 
 export const products: Product[] = [
   {
-    code: 1,
+    code: "1",
+    description: "",
     name: "Pizza",
     price: 8000,
     photo: "https://imag.bonviveur.com/hamburguesa-clasica.webp",
   },
   {
-    code: 2,
+    code: "2",
+    description: "",
     name: "Hamburguesa",
     price: 8000,
     photo: "https://imag.bonviveur.com/hamburguesa-clasica.webp",
   },
 ];
 
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-  }).format(price);
-};
+
 
 interface ProductListProps {
   onEdit?: () => void;
@@ -56,10 +49,11 @@ interface ProductListProps {
 }
 
 export default function ProductList({ onEdit, onDelete }: ProductListProps) {
+  const alertRef = useRef<{ onOpen: () => void; onClose: () => void }>(null);
+
   const renderCell = React.useCallback(
     (product: Product, columnKey: keyof Product | "actions") => {
       const cellValue = product[columnKey as keyof Product];
-
       switch (columnKey) {
         case "code":
           return <p className="font-bold">{cellValue}</p>;
@@ -85,7 +79,11 @@ export default function ProductList({ onEdit, onDelete }: ProductListProps) {
               </Tooltip>
               <Tooltip color="danger" content="Delete user">
                 <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <DeleteIcon onClick={onDelete} />
+                  <DeleteIcon
+                    onClick={() => {
+                      alertRef.current?.onOpen();
+                    }}
+                  />
                 </span>
               </Tooltip>
             </div>
@@ -125,6 +123,14 @@ export default function ProductList({ onEdit, onDelete }: ProductListProps) {
           )}
         </TableBody>
       </Table>
+      <Alert
+        ref={alertRef}
+        onCloseCallback={(confirmed: boolean) => {
+          console.log(confirmed);
+        }}
+        title="Notificacion"
+        description="Esta seguro que desea eliminar este registro ?"
+      />
     </>
   );
 }

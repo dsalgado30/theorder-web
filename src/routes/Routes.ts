@@ -9,5 +9,6 @@ export const routes = {
     users:"/admin/users",
     orders:"/admin/orders",
     history:"/admin/history",
+    orderDetail: "/admin/order_detail/:orderId",
     root: "..",
   };
