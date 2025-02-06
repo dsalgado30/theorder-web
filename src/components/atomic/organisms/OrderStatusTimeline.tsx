@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@heroui/react";
+import { Card, CardBody, Divider } from "@heroui/react";
 import { OrderStatusHistory } from "../../../models/order-status-history";
 import OrderStatus from "./OrderStatus";
 
@@ -19,6 +19,7 @@ const OrderStatusTimeline = ({ timeline, className }: OrderStatusTimelineProps) 
                 <OrderStatus state={item.status} label={item.statusName} />
                 <span>{item.date} {item.time}</span>
               </div>
+              {index < timeline.length - 1 && <Divider className="mt-2" />}
             </li>
           ))}
         </ul>

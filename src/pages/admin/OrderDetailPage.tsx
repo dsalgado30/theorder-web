@@ -75,8 +75,9 @@ const OrderDetailPage = () => {
             Volver Atrás
           </Button>
         </div>
+        
         <div className="flex flex-wrap">
-          <div className="w-full md:w-1/2  items-center pr-2 justify-center">
+          <div className="w-full md:w-1/2  items-center px-2 justify-center">
             {orderDetail.detail.map((item) => (
               <OrderProductCard
                 key={item.id}
@@ -87,7 +88,7 @@ const OrderDetailPage = () => {
               />
             ))}
           </div>
-          <div className="w-full md:w-1/2  items-center pl-2 justify-center  mt-8 md:mt-0">
+          <div className="w-full md:w-1/2  items-center px-2 justify-center  mt-4 md:mt-2">
             <OrderDetailCard
               id={orderDetail.id}
               homeDelivery={orderDetail.homeDelivery}
