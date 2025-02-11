@@ -1,14 +1,11 @@
 // context/auth-context.ts
 import { createContext, useState, useEffect, useContext } from 'react';
 import { User } from "../models/user";
-import { AuthLogin, AuthRegister } from '../models/auth';
-import { Role } from '../models/role';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
-  onLogin: (request: AuthLogin) => void;
-  onRegister: (request: AuthRegister) => void;
+  onLoginSuccess: (request: User) => void;
   onLogout: () => void;
 }
 
@@ -30,13 +27,10 @@ export const AuthProvider = ({ children }: any) => {
     localStorage.setItem('user', JSON.stringify(user));
   }, [isAuthenticated, user]);
 
-  const onLogin = (request: AuthLogin) => {
-    const newUser = new User("Daniela Salgado", "daniela@example.com", Role.ADMIN);
-    setUser(newUser);
+  const onLoginSuccess = (result: User) => {
+    setUser(result);
     setIsAuthenticated(true);
   };
-
-  const onRegister = (request: AuthRegister) => {};
 
   const onLogout = () => {
     setIsAuthenticated(false);
@@ -46,7 +40,7 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, onLogin, onRegister, onLogout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, onLoginSuccess, onLogout }}>
       {children}
     </AuthContext.Provider>
   );

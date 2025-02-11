@@ -5,6 +5,7 @@ export class AuthLogin {
     ){}
 }
 
+
 export class AuthRegister {
     constructor(
         public name: string,

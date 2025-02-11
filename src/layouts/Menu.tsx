@@ -1,6 +1,4 @@
 import {  BookmarkIcon, BuildingStorefrontIcon, HomeIcon, ShoppingCartIcon, TableCellsIcon, UserGroupIcon } from "@heroicons/react/16/solid";
-
-
 import { MenuItem } from "../components/atomic/atoms/MenuItem";
 import { routes } from "../routes/Routes";
 
